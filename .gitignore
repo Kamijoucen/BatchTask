@@ -1,6 +1,6 @@
 # 项目排除路径
-/target/### VisualStudioCode template
-.vscode/*
+/target/
+.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
