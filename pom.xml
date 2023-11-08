@@ -13,7 +13,7 @@
         <dependency>
             <groupId>com.kamijoucen</groupId>
             <artifactId>powerstruct</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->

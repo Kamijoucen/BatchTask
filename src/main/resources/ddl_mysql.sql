@@ -1,8 +1,21 @@
 -- Active: 1699267571361@@127.0.0.1@3306@batch_task
 
+-- 属性表
+
+CREATE TABLE
+    `BT_ATTRIBUTE`(
+        `key` VARCHAR(64) NOT NULL PRIMARY KEY COMMENT 'Primary Key',
+        `name` VARCHAR(64),
+        `value` VARCHAR(254),
+        `version` INT,
+        `create_time` DATETIME COMMENT 'Create Time',
+    ) engine = innodb DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_bin COMMENT '属性表';
+
+-- 批量任务表
+
 CREATE TABLE
     `BT_TASK`(
-        `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+        `id` VARCHAR(32) NOT NULL PRIMARY KEY COMMENT 'Primary Key',
         `name` VARCHAR(64),
         `status` VARCHAR(32),
         `version` INT,
@@ -17,7 +30,7 @@ CREATE TABLE
 
 CREATE TABLE
     `BT_BATCH`(
-        `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+        `id` VARCHAR(32) NOT NULL PRIMARY KEY COMMENT 'Primary Key',
         `type` VARCHAR(32),
         `name` VARCHAR(64),
         `status` VARCHAR(32),
@@ -28,7 +41,7 @@ CREATE TABLE
 
 CREATE TABLE
     `BT_BATCH_PART` (
-        `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+        `id` VARCHAR(32) NOT NULL PRIMARY KEY COMMENT 'Primary Key',
         `task_id` INT NOT NULL COMMENT 'Task Id',
         `batch_id` INT NOT NULL COMMENT 'Batch Id',
         `status` VARCHAR(32),
@@ -39,7 +52,7 @@ CREATE TABLE
 
 CREATE TABLE
     `BT_BATCH_TASK_MESSAGE` (
-        `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Primary Key',
+        `id` VARCHAR(32) NOT NULL PRIMARY KEY COMMENT 'Primary Key',
         `part_id` INT NOT NULL COMMENT 'Part Id',
         `message` VARCHAR(1024),
         `create_time` DATETIME COMMENT 'Create Time',
