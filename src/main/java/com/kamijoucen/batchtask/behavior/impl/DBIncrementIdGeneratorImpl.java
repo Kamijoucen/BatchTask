@@ -12,10 +12,7 @@ public class DBIncrementIdGeneratorImpl extends BaseBehavior implements IdGenera
 
     @Override
     public Object nextId() {
-        return this.configuration.getExecutionService().execute(ctx -> {
-            
-            return "";
-        });
+        return "";
         
     }
 

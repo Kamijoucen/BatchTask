@@ -14,8 +14,7 @@ public class UUIdGeneratorImpl extends BaseBehavior implements IdGenerator {
 
     @Override
     public Object nextId() {
-        return this.configuration.getExecutionService().execute(
-                (ctx) -> UUID.randomUUID().toString());
+        return UUID.randomUUID().toString();
     }
 
 }
