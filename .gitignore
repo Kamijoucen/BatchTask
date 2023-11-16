@@ -17,3 +17,5 @@
 *.vsix
 
 .idea
+
+src/test/resources/dev.properties

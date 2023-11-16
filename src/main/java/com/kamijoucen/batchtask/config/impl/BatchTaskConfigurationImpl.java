@@ -1,8 +1,11 @@
 package com.kamijoucen.batchtask.config.impl;
 
+import java.util.Objects;
+
 import javax.sql.DataSource;
 
 import com.kamijoucen.batchtask.behavior.IdGenerator;
+import com.kamijoucen.batchtask.behavior.TaskManager;
 import com.kamijoucen.batchtask.behavior.impl.DBIncrementIdGeneratorImpl;
 import com.kamijoucen.batchtask.behavior.impl.UUIdGeneratorImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
@@ -25,8 +28,11 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     private IdGenerator entityIdGenerator;
 
     private IdGenerator uuIdGenerator;
+
+    private TaskManager taskManager;
     
     public BatchTaskConfigurationImpl(DataSource dataSource) {
+        Objects.requireNonNull(dataSource);
         this.dataSource = dataSource;
         init();
         initContext();
@@ -63,6 +69,15 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     @Override
     public DataSource getDataSource() {
         return dataSource;
+    }
+
+    @Override
+    public TaskManager getTaskManager() {
+        return taskManager;
+    }
+
+    public void setTaskManager(TaskManager taskManager) {
+        this.taskManager = taskManager;
     }
 
     public void setDataSource(DataSource dataSource) {
