@@ -1,4 +1,4 @@
-package com.kamijoucen.batchtask.behavior;
+package com.kamijoucen.batchtask.api;
 
 public interface TaskManager {
 

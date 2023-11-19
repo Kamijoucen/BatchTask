@@ -4,8 +4,9 @@ import java.util.Objects;
 
 import javax.sql.DataSource;
 
+import com.kamijoucen.batchtask.api.TaskManager;
+import com.kamijoucen.batchtask.api.impl.TaskManagerImpl;
 import com.kamijoucen.batchtask.behavior.IdGenerator;
-import com.kamijoucen.batchtask.behavior.TaskManager;
 import com.kamijoucen.batchtask.behavior.impl.DBIncrementIdGeneratorImpl;
 import com.kamijoucen.batchtask.behavior.impl.UUIdGeneratorImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
@@ -48,6 +49,7 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
         this.executionService = new ExecutionServiceImpl(this.structConfiguration);
         this.entityIdGenerator = new DBIncrementIdGeneratorImpl(this);
         this.uuIdGenerator = new UUIdGeneratorImpl(this);
+        this.taskManager = new TaskManagerImpl(this);
     }
     
     @Override

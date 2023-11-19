@@ -13,7 +13,6 @@ public class DBIncrementIdGeneratorImpl extends BaseBehavior implements IdGenera
     @Override
     public Object nextId() {
         return "";
-        
     }
 
 }
