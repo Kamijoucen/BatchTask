@@ -7,6 +7,9 @@ import com.kamijoucen.powerstruct.exe.Exe;
 
 public class DefaultTimerExecutorImpl extends AbstractTimerExecutor {
 
+    
+    
+
     public DefaultTimerExecutorImpl(long initialDelay, long period, TimeUnit timeUnit, Exe<Void> runnable) {
         super(initialDelay, period, timeUnit, runnable);
     }

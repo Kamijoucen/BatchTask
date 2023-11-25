@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import com.kamijoucen.batchtask.api.TaskManager;
 import com.kamijoucen.batchtask.behavior.IdGenerator;
+import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
 import com.kamijoucen.powerstruct.api.ExecutionService;
 
 public interface BatchTaskConfiguration {
@@ -17,5 +18,7 @@ public interface BatchTaskConfiguration {
     DataSource getDataSource();
 
     TaskManager getTaskManager();
+
+    MybatisSesstionManager getMybatisSesstionManager();
     
 }

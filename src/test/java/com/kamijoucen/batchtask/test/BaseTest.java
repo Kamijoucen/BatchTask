@@ -1,13 +1,18 @@
 package com.kamijoucen.batchtask.test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.mybatis.mapper.TaskMapper;
 import com.kamijoucen.batchtask.config.impl.BatchTaskConfigurationImpl;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -18,11 +23,15 @@ public class BaseTest {
 
     private Properties properties;
 
+    private BatchTaskConfigurationImpl configuration;
+
     // 初始化 conf.properties
     public void initProperties() throws IOException {
         this.properties = new Properties();
-        properties.load(BaseTest.class.getResourceAsStream("/dev.properties"));
-        // properties.load(BaseTest.class.getResourceAsStream("/conf.properties"));
+        // BaseTest.class.getResourceAsStream("/conf.properties")
+        try (InputStream input = BaseTest.class.getResourceAsStream("/dev.properties")) {
+            properties.load(input);
+        }
     }
 
     // 初始化hikari数据源
@@ -44,8 +53,7 @@ public class BaseTest {
 
     // 初始化Configuration
     public void initConfiguration() {
-        BatchTaskConfigurationImpl configuration = new BatchTaskConfigurationImpl(dataSource);
-        System.out.println(configuration.getUuid());
+        configuration = new BatchTaskConfigurationImpl(dataSource);
     }
 
     @BeforeEach
@@ -55,9 +63,15 @@ public class BaseTest {
         initConfiguration();
     }
 
+    // test query
     @Test
-    public void test() {
-        System.out.println("hello world");
+    public void testQuery() {
+        MybatisSesstionManager mybatisSesstionManager = configuration.getMybatisSesstionManager();
+        try (SqlSession session = mybatisSesstionManager.openSession()) {
+            TaskMapper mapper = session.getMapper(TaskMapper.class);
+            String result = mapper.testQuery("1");
+            System.out.println(result);
+        }
     }
 
 }

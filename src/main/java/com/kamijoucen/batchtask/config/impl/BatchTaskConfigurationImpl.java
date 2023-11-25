@@ -9,6 +9,8 @@ import com.kamijoucen.batchtask.api.impl.TaskManagerImpl;
 import com.kamijoucen.batchtask.behavior.IdGenerator;
 import com.kamijoucen.batchtask.behavior.impl.DBIncrementIdGeneratorImpl;
 import com.kamijoucen.batchtask.behavior.impl.UUIdGeneratorImpl;
+import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.mybatis.impl.MybatisSesstionManagerImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.batchtask.context.ContextInterceptor;
 import com.kamijoucen.powerstruct.api.ExecutionService;
@@ -31,11 +33,13 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     private IdGenerator uuIdGenerator;
 
     private TaskManager taskManager;
+
+    private MybatisSesstionManager mybatisSesstionManager;
     
     public BatchTaskConfigurationImpl(DataSource dataSource) {
         Objects.requireNonNull(dataSource);
         this.dataSource = dataSource;
-        init();
+        initBehavior();
         initContext();
         this.uuid = uuIdGenerator.nextId().toString();
     }
@@ -44,12 +48,16 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
         this.structConfiguration.getExecutor().addExeInterceptor(new ContextInterceptor(this));
     }
 
-    private void init() {
+    private void initBehavior() {
         this.structConfiguration = new StructConfigurationImpl();
         this.executionService = new ExecutionServiceImpl(this.structConfiguration);
         this.entityIdGenerator = new DBIncrementIdGeneratorImpl(this);
         this.uuIdGenerator = new UUIdGeneratorImpl(this);
         this.taskManager = new TaskManagerImpl(this);
+
+        // init mybatis
+        this.mybatisSesstionManager = new MybatisSesstionManagerImpl(this.dataSource);
+        this.mybatisSesstionManager.init();
     }
     
     @Override
@@ -99,6 +107,11 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     // set uuid generator
     public void setUuIdGenerator(IdGenerator uuIdGenerator) {
         this.uuIdGenerator = uuIdGenerator;
+    }
+
+    @Override
+    public MybatisSesstionManager getMybatisSesstionManager() {
+        return this.mybatisSesstionManager;
     }
 
 }
