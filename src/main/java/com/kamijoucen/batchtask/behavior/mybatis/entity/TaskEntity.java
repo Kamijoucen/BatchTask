@@ -1,10 +1,8 @@
-package com.kamijoucen.batchtask.domain;
+package com.kamijoucen.batchtask.behavior.mybatis.entity;
 
 import java.time.LocalDateTime;
 
-public class Task {
-
-    private String id;
+public class TaskEntity extends BaseEntity {
 
     private String name;
 
@@ -14,17 +12,7 @@ public class Task {
 
     private int version;
 
-    private LocalDateTime createTime;
-
     private LocalDateTime expireTime;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -40,14 +28,6 @@ public class Task {
 
     public void setVersion(int version) {
         this.version = version;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
     }
 
     public LocalDateTime getExpireTime() {
@@ -73,5 +53,5 @@ public class Task {
     public void setOwner(String owner) {
         this.owner = owner;
     }
-    
+
 }

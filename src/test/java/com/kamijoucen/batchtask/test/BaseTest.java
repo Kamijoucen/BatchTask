@@ -2,16 +2,18 @@ package com.kamijoucen.batchtask.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity;
 import com.kamijoucen.batchtask.behavior.mybatis.mapper.TaskMapper;
 import com.kamijoucen.batchtask.config.impl.BatchTaskConfigurationImpl;
 import com.zaxxer.hikari.HikariConfig;
@@ -63,14 +65,41 @@ public class BaseTest {
         initConfiguration();
     }
 
+    @Test
+    public void testInsert() {
+        MybatisSesstionManager mybatisSesstionManager = configuration.getMybatisSesstionManager();
+
+        try (SqlSession session = mybatisSesstionManager.openSession()) {
+            TaskMapper mapper = session.getMapper(TaskMapper.class);
+
+            TaskEntity task = new TaskEntity();
+            task.setName("test");
+            task.setVersion(1);
+            task.setOwner(configuration.getUuid());
+            task.setStatus("1");
+            task.setCreateTime(LocalDateTime.now());
+            task.setExpireTime(LocalDateTime.now());
+            int result = mapper.insertTask(task);
+            System.out.println(result);
+            session.rollback();
+        }
+    }
+
     // test query
     @Test
     public void testQuery() {
         MybatisSesstionManager mybatisSesstionManager = configuration.getMybatisSesstionManager();
+
         try (SqlSession session = mybatisSesstionManager.openSession()) {
             TaskMapper mapper = session.getMapper(TaskMapper.class);
-            String result = mapper.testQuery("1");
-            System.out.println(result);
+
+            TaskEntity task = new TaskEntity();
+            task.setExpireTime(LocalDateTime.now());
+
+            List<TaskEntity> taskList = mapper.getUnLockOrExpireTask(task, 10);
+            System.out.println(taskList);
+
+            session.commit();
         }
     }
 

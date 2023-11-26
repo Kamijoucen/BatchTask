@@ -1,7 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kamijoucen.batchtask.behavior.mybatis.mapper.TaskMapper">
-    <select id="testQuery" resultType="String">
-        select id from BT_TASK where id = #{id}
+
+    <!-- 公共字段 -->
+    <sql id="commonField">
+        id, name, status, version, owner, create_time, expire_time
+    </sql>
+
+    <!-- 公共value -->
+    <sql id="commonValue">
+        #{id}, #{name}, #{status}, #{version}, #{owner}, #{createTime, jdbcType=TIMESTAMP}, #{expireTime, jdbcType=TIMESTAMP}
+    </sql>
+
+    <!-- 插入任务 -->
+    <insert id="insertTask"
+        parameterType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id"> 
+        insert into BT_TASK(
+        <include refid="commonField"/>
+        ) values(
+        <include refid="commonValue"/>
+        ) </insert>
+
+    <!-- 批量插入任务 -->
+    <insert id="batchInsertTask" parameterType="java.util.List">
+        insert into BT_TASK(
+        <include refid="commonField"/>
+        ) values
+        <foreach collection="tasks" item="task" index="index" separator=",">
+            (
+            <include refid="commonValue"/>
+            )
+        </foreach>
+    </insert>
+
+    <!-- 尝试锁定任务（更新owner） -->
+    <update id="tryLockTask" parameterType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity">
+        update BT_TASK set owner = #{owner}, version = version + 1 where id = #{id} and version = #{version} 
+    </update>
+
+    <!-- 批量锁定任务 -->
+    <update id="batchLockTask" parameterType="java.util.List">
+        update BT_TASK
+        set owner = #{owner}, status = #{status}, version = version + 1
+        where (id, version) in
+        <foreach item="task" collection="list" open="(" separator=")," close=")">
+            (#{task.id}, #{task.version})
+        </foreach>
+    </update>
+
+    <!-- 获取未锁定，或者已超时的任务 -->
+    <select id="getUnLockOrExpireTask" resultType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity">
+        select 
+        <include refid="commonField"/>
+        from 
+        BT_TASK where owner is null or expire_time <![CDATA[<]]> #{task.expireTime, jdbcType=TIMESTAMP} 
+        limit #{limit}
     </select>
+
+    <!-- 释放任务 -->
+    <update id="releaseTask" parameterType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity">
+        update BT_TASK set owner = null, version = version + 1 where id = #{id} and owner = #{owner}
+    </update>
+
+    <!-- 批量释放任务 -->
+    <update id="batchReleaseTask" parameterType="java.util.List">
+        update BT_TASK set owner = null, version = version + 1 where id in 
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")"> 
+            #{item} 
+        </foreach>
+    </update>
+        
 </mapper>
