@@ -14,6 +14,8 @@ public interface TaskMapper {
 
     int batchInsertTask(@Param("tasks") List<TaskEntity> tasks);
     
-    List<TaskEntity> getUnLockOrExpireTask(@Param("task") TaskEntity task, @Param("limit") int limit);
+    List<TaskEntity> getUnLockTask(@Param("task") TaskEntity task, @Param("limit") int limit);
+
+    List<TaskEntity> getExpireTask(@Param("task") TaskEntity task, @Param("limit") int limit);
     
 }

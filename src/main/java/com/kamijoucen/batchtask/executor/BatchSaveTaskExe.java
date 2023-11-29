@@ -1,14 +1,19 @@
 package com.kamijoucen.batchtask.executor;
 
 import java.util.List;
-import org.apache.commons.collections4.CollectionUtils;
 
-import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity;
+import com.kamijoucen.batchtask.behavior.mybatis.mapper.TaskMapper;
 import com.kamijoucen.powerstruct.context.RuntimeContext;
 
-public class BatchSaveTaskExe extends AbstractSqlSessionExe<Void> {
+public class BatchSaveTaskExe extends AbstractSessionSqlExe<List<TaskEntity>> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BatchSaveTaskExe.class);
+    
     private final List<TaskEntity> taskList;
 
     public BatchSaveTaskExe(List<TaskEntity> taskList) {
@@ -16,11 +21,13 @@ public class BatchSaveTaskExe extends AbstractSqlSessionExe<Void> {
     }
 
     @Override
-    public Void execute(RuntimeContext ctx, MybatisSesstionManager manager) {
-        if (CollectionUtils.isEmpty(taskList)) {            
-            return null;
+    public List<TaskEntity> execute(RuntimeContext ctx, SqlSession session) {
+        TaskMapper mapper = session.getMapper(TaskMapper.class);
+        int batchInsertTask = mapper.batchInsertTask(taskList);
+        if (batchInsertTask != taskList.size()) {
+            LOGGER.error("batch insert task error, insert count: {}, task count: {}", batchInsertTask, taskList.size());
         }
-        return null;
+        return taskList;
     }
     
 }

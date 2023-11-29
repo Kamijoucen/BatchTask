@@ -1,5 +1,3 @@
--- Active: 1699267571361@@127.0.0.1@3306@batch_task
-
 -- 属性表
 
 CREATE TABLE `BT_ATTRIBUTE`(

@@ -96,7 +96,7 @@ public class BaseTest {
             TaskEntity task = new TaskEntity();
             task.setExpireTime(LocalDateTime.now());
 
-            List<TaskEntity> taskList = mapper.getUnLockOrExpireTask(task, 10);
+            List<TaskEntity> taskList = mapper.getExpireTask(task, 10);
             System.out.println(taskList);
 
             session.commit();

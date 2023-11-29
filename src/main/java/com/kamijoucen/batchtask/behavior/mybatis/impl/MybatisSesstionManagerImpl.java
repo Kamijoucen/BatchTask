@@ -21,6 +21,7 @@ public class MybatisSesstionManagerImpl implements MybatisSesstionManager {
     private SqlSessionFactory sqlSessionFactory;
     
     public MybatisSesstionManagerImpl(DataSource dataSource) {
+
         this.dataSource = dataSource;
     }
 

@@ -17,9 +17,10 @@
         parameterType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id"> 
         insert into BT_TASK(
         <include refid="commonField"/>
-        ) values(
+        ) values( 
         <include refid="commonValue"/>
-        ) </insert>
+        )
+    </insert>
 
     <!-- 批量插入任务 -->
     <insert id="batchInsertTask" parameterType="java.util.List">
@@ -48,12 +49,21 @@
         </foreach>
     </update>
 
-    <!-- 获取未锁定，或者已超时的任务 -->
-    <select id="getUnLockOrExpireTask" resultType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity">
+    <!-- 获取未锁定任务 -->
+    <select id="getUnLockTask" resultType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity">
         select 
         <include refid="commonField"/>
         from 
-        BT_TASK where owner is null or expire_time <![CDATA[<]]> #{task.expireTime, jdbcType=TIMESTAMP} 
+        BT_TASK where owner is null
+        limit #{limit}
+    </select>
+
+    <!-- 获取已超时任务 -->
+    <select id="getExpireTask" resultType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity">
+        select 
+        <include refid="commonField"/>
+        from
+        BT_TASK where expire_time <![CDATA[<]]> #{task.expireTime, jdbcType=TIMESTAMP} 
         limit #{limit}
     </select>
 
