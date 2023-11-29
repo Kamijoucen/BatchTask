@@ -11,7 +11,7 @@ public abstract class AbstractBatchTaskExe<T> extends AbstractExe<T> {
     
     @Override
     public T execute(RuntimeContext ctx) {
-        Object property = ctx.getProperty(ContextPropertyEnum.BATCH_TASK_CONFIGURATION.name);
+        Object property = ctx.getProperty(ContextPropertyEnum.BATCH_TASK_CONFIGURATION);
         if (!(property instanceof BatchTaskConfiguration)) {
             throw new RuntimeException("batch task configuration is not instance of BatchTaskConfiguration");
         }

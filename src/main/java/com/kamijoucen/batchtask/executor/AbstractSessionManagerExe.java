@@ -9,7 +9,7 @@ public abstract class AbstractSessionManagerExe<T> extends AbstractBatchTaskExe<
 
     @Override
     public T execute(RuntimeContext ctx, BatchTaskConfiguration configuration) {
-        Object property = ctx.getProperty(ContextPropertyEnum.SQL_SESSION_FACTORY.name);
+        Object property = ctx.getProperty(ContextPropertyEnum.SQL_SESSION_MANAGER);
         if (!(property instanceof MybatisSesstionManager)) {
             throw new RuntimeException("sql session factory is not instance of MybatisSesstionManager");
         }

@@ -12,6 +12,7 @@ import com.kamijoucen.batchtask.behavior.impl.UUIdGeneratorImpl;
 import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
 import com.kamijoucen.batchtask.behavior.mybatis.impl.MybatisSesstionManagerImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
+import com.kamijoucen.batchtask.config.BatchTaskRuntimeContextFactory;
 import com.kamijoucen.batchtask.context.ContextInterceptor;
 import com.kamijoucen.powerstruct.api.ExecutionService;
 import com.kamijoucen.powerstruct.api.impl.ExecutionServiceImpl;
@@ -23,7 +24,7 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     private final String uuid;
 
     private DataSource dataSource;
-    
+
     private StructConfiguration structConfiguration;
 
     private ExecutionService executionService;
@@ -35,22 +36,26 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     private TaskManager taskManager;
 
     private MybatisSesstionManager mybatisSesstionManager;
-    
+
     public BatchTaskConfigurationImpl(DataSource dataSource) {
         Objects.requireNonNull(dataSource);
         this.dataSource = dataSource;
         initBehavior();
-        initContext();
+        initStructConfiguration();
         this.uuid = uuIdGenerator.nextId().toString();
     }
-     
-    private void initContext() {
-        this.structConfiguration.getExecutor().addExeInterceptor(new ContextInterceptor(this));
+
+    private void initStructConfiguration() {
+        StructConfigurationImpl structConfigurationImpl = new StructConfigurationImpl();
+        structConfigurationImpl = new StructConfigurationImpl();
+        structConfigurationImpl.getExecutor().addExeInterceptor(new ContextInterceptor(this));
+        structConfigurationImpl
+                .setRuntimeContextFactory(new BatchTaskRuntimeContextFactory(this, structConfigurationImpl));
+        this.structConfiguration = structConfigurationImpl;
+        this.executionService = new ExecutionServiceImpl(this.structConfiguration);
     }
 
     private void initBehavior() {
-        this.structConfiguration = new StructConfigurationImpl();
-        this.executionService = new ExecutionServiceImpl(this.structConfiguration);
         this.entityIdGenerator = new DBIncrementIdGeneratorImpl(this);
         this.uuIdGenerator = new UUIdGeneratorImpl(this);
         this.taskManager = new TaskManagerImpl(this);
@@ -59,7 +64,7 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
         this.mybatisSesstionManager = new MybatisSesstionManagerImpl(this.dataSource);
         this.mybatisSesstionManager.init();
     }
-    
+
     @Override
     public String getUuid() {
         return this.uuid;
@@ -103,7 +108,7 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     public IdGenerator getUuIdGenerator() {
         return uuIdGenerator;
     }
-    
+
     // set uuid generator
     public void setUuIdGenerator(IdGenerator uuIdGenerator) {
         this.uuIdGenerator = uuIdGenerator;

@@ -25,11 +25,11 @@
     <!-- 批量插入任务 -->
     <insert id="batchInsertTask" parameterType="java.util.List">
         insert into BT_TASK(
-        <include refid="commonField"/>
+            <include refid="commonField"/>
         ) values
         <foreach collection="tasks" item="task" index="index" separator=",">
             (
-            <include refid="commonValue"/>
+                #{task.id}, #{task.name}, #{task.status}, #{task.version}, #{task.owner}, #{task.createTime, jdbcType=TIMESTAMP}, #{task.expireTime, jdbcType=TIMESTAMP}
             )
         </foreach>
     </insert>

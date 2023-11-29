@@ -3,6 +3,7 @@ package com.kamijoucen.batchtask.test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,6 +17,7 @@ import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
 import com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity;
 import com.kamijoucen.batchtask.behavior.mybatis.mapper.TaskMapper;
 import com.kamijoucen.batchtask.config.impl.BatchTaskConfigurationImpl;
+import com.kamijoucen.batchtask.executor.BatchSaveTaskExe;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -101,6 +103,28 @@ public class BaseTest {
 
             session.commit();
         }
+    }
+
+    // batch insert
+    @Test
+    public void testBatchInsert() {
+
+        List<TaskEntity> taskList = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            TaskEntity task = new TaskEntity();
+            task.setName("test");
+            task.setVersion(1);
+            task.setOwner(configuration.getUuid());
+            task.setStatus("1");
+            task.setCreateTime(LocalDateTime.now());
+            task.setExpireTime(LocalDateTime.now());
+            taskList.add(task);
+        }
+
+        BatchSaveTaskExe exe = new BatchSaveTaskExe(taskList);
+        List<TaskEntity> execute = configuration.getExecutionService().execute(exe);
+
+        System.out.println(execute.size());
     }
 
 }
