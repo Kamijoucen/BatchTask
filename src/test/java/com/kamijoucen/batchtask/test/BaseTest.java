@@ -110,7 +110,7 @@ public class BaseTest {
     public void testBatchInsert() {
 
         List<TaskEntity> taskList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             TaskEntity task = new TaskEntity();
             task.setName("test");
             task.setVersion(1);
@@ -120,10 +120,8 @@ public class BaseTest {
             task.setExpireTime(LocalDateTime.now());
             taskList.add(task);
         }
-
         BatchSaveTaskExe exe = new BatchSaveTaskExe(taskList);
         List<TaskEntity> execute = configuration.getExecutionService().execute(exe);
-
         System.out.println(execute.size());
     }
 

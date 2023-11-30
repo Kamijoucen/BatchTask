@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -52,8 +53,14 @@ public class MybatisSesstionManagerImpl implements MybatisSesstionManager {
 
     @Override
     public SqlSession openSession() {
-        Objects.requireNonNull(sqlSessionFactory, "sqlSessionFactory is not init");
+        Objects.requireNonNull(sqlSessionFactory, "sqlSessionFactory is not init");        
         return sqlSessionFactory.openSession();
+    }
+
+    @Override
+    public SqlSession openSession(ExecutorType executorType) {
+        Objects.requireNonNull(sqlSessionFactory, "sqlSessionFactory is not init");
+        return sqlSessionFactory.openSession(executorType);
     }
     
 }

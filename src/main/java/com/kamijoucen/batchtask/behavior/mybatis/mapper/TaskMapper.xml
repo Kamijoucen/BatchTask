@@ -17,7 +17,7 @@
         parameterType="com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity" useGeneratedKeys="true" keyProperty="id"> 
         insert into BT_TASK(
         <include refid="commonField"/>
-        ) values( 
+        ) values(
         <include refid="commonValue"/>
         )
     </insert>

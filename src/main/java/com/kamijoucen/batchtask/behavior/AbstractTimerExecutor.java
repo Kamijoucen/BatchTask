@@ -8,7 +8,7 @@ import com.kamijoucen.powerstruct.exe.Exe;
 public abstract class AbstractTimerExecutor implements TimerExecutor {
 
     protected final BatchTaskConfiguration configuration;
-    
+
     protected final Exe<Void> runnable;
 
     protected final long initialDelay;
@@ -17,7 +17,8 @@ public abstract class AbstractTimerExecutor implements TimerExecutor {
 
     protected final TimeUnit timeUnit;
 
-    public AbstractTimerExecutor(BatchTaskConfiguration configuration, long initialDelay, long period, TimeUnit timeUnit, Exe<Void> runnable) {
+    public AbstractTimerExecutor(BatchTaskConfiguration configuration, long initialDelay, long period,
+            TimeUnit timeUnit, Exe<Void> runnable) {
         this.configuration = configuration;
         this.initialDelay = initialDelay;
         this.period = period;
