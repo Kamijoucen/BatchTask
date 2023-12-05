@@ -6,8 +6,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 public interface MybatisSesstionManager {
 
-    void init();
-    
     SqlSession openSession();
 
     SqlSession openSession(ExecutorType executorType);

@@ -10,12 +10,12 @@ public interface BatchTaskConfiguration {
 
     String getUuid();
 
-    ExecutionService getExecutionService();
-
     DataSource getDataSource();
 
-    TaskManager getTaskManager();
+    ExecutionService getExecutionService();
 
     MybatisSesstionManager getMybatisSesstionManager();
+    
+    TaskManager getTaskManager();
     
 }

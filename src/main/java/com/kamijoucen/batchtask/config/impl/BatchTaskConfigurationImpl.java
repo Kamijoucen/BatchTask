@@ -6,9 +6,12 @@ import javax.sql.DataSource;
 
 import com.kamijoucen.batchtask.api.TaskManager;
 import com.kamijoucen.batchtask.api.impl.TaskManagerImpl;
+import com.kamijoucen.batchtask.behavior.factory.MybatisSesstionManagerFactory;
+import com.kamijoucen.batchtask.behavior.factory.TimerFactory;
+import com.kamijoucen.batchtask.behavior.factory.impl.MybatisSesstionManagerFactoryImpl;
+import com.kamijoucen.batchtask.behavior.factory.impl.TimerFactoryImpl;
 import com.kamijoucen.batchtask.behavior.service.IdGenerator;
 import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
-import com.kamijoucen.batchtask.behavior.service.impl.MybatisSesstionManagerImpl;
 import com.kamijoucen.batchtask.behavior.service.impl.UUIdGeneratorImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.batchtask.config.BatchTaskRuntimeContextFactory;
@@ -34,12 +37,23 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
 
     private MybatisSesstionManager mybatisSesstionManager;
 
+    // factory
+    private MybatisSesstionManagerFactory mybatisSesstionManagerFactory;
+
+    private TimerFactory timerFactory;
+
     public BatchTaskConfigurationImpl(DataSource dataSource) {
         Objects.requireNonNull(dataSource);
         this.dataSource = dataSource;
+        initFactory();
         initBehavior();
         initStructConfiguration();
         this.uuid = uuIdGenerator.nextId().toString();
+    }
+
+    private void initFactory() {
+        this.mybatisSesstionManagerFactory = new MybatisSesstionManagerFactoryImpl();
+        this.timerFactory = new TimerFactoryImpl();
     }
 
     private void initStructConfiguration() {
@@ -57,13 +71,18 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
         this.taskManager = new TaskManagerImpl(this);
 
         // init mybatis
-        this.mybatisSesstionManager = new MybatisSesstionManagerImpl(this.dataSource, this);
-        this.mybatisSesstionManager.init();
+        if (this.mybatisSesstionManager != null) {
+            this.mybatisSesstionManager = mybatisSesstionManagerFactory.createMybatisSesstionManager(dataSource, this);
+        }
     }
 
     @Override
     public String getUuid() {
         return this.uuid;
+    }
+
+    public void setTimerFactory(TimerFactory timerFactory) {
+        this.timerFactory = timerFactory;
     }
 
     @Override
@@ -86,10 +105,6 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
         this.taskManager = taskManager;
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     // get uuid generator
     public IdGenerator getUuIdGenerator() {
         return uuIdGenerator;
@@ -103,6 +118,10 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     @Override
     public MybatisSesstionManager getMybatisSesstionManager() {
         return this.mybatisSesstionManager;
+    }
+
+    public void setMybatisSesstionManager(MybatisSesstionManager mybatisSesstionManager) {
+        this.mybatisSesstionManager = mybatisSesstionManager;
     }
 
 }

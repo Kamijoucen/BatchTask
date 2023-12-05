@@ -28,10 +28,10 @@ public class MybatisSesstionManagerImpl extends BaseBehavior implements MybatisS
         super(configuration);
         Objects.requireNonNull(dataSource, "dataSource is null");
         this.dataSource = dataSource;
+        init();
     }
     
-    @Override
-    public synchronized void init() {
+    private void init() {
         if (sqlSessionFactory != null) {
             return;
         }
