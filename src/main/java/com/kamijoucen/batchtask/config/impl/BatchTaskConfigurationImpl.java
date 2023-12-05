@@ -8,12 +8,11 @@ import com.kamijoucen.batchtask.api.TaskManager;
 import com.kamijoucen.batchtask.api.impl.TaskManagerImpl;
 import com.kamijoucen.batchtask.behavior.service.IdGenerator;
 import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
-import com.kamijoucen.batchtask.behavior.service.impl.DBIncrementIdGeneratorImpl;
 import com.kamijoucen.batchtask.behavior.service.impl.MybatisSesstionManagerImpl;
 import com.kamijoucen.batchtask.behavior.service.impl.UUIdGeneratorImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.batchtask.config.BatchTaskRuntimeContextFactory;
-import com.kamijoucen.batchtask.context.ContextInterceptor;
+import com.kamijoucen.batchtask.config.ContextInterceptor;
 import com.kamijoucen.powerstruct.api.ExecutionService;
 import com.kamijoucen.powerstruct.api.impl.ExecutionServiceImpl;
 import com.kamijoucen.powerstruct.config.StructConfiguration;
@@ -28,8 +27,6 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     private StructConfiguration structConfiguration;
 
     private ExecutionService executionService;
-
-    private IdGenerator entityIdGenerator;
 
     private IdGenerator uuIdGenerator;
 
@@ -56,12 +53,11 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     }
 
     private void initBehavior() {
-        this.entityIdGenerator = new DBIncrementIdGeneratorImpl(this);
         this.uuIdGenerator = new UUIdGeneratorImpl(this);
         this.taskManager = new TaskManagerImpl(this);
 
         // init mybatis
-        this.mybatisSesstionManager = new MybatisSesstionManagerImpl(this.dataSource);
+        this.mybatisSesstionManager = new MybatisSesstionManagerImpl(this.dataSource, this);
         this.mybatisSesstionManager.init();
     }
 
@@ -73,11 +69,6 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     @Override
     public ExecutionService getExecutionService() {
         return this.executionService;
-    }
-
-    @Override
-    public IdGenerator getEntityIdGenerator() {
-        return this.entityIdGenerator;
     }
 
     // get and set dataSource
@@ -97,11 +88,6 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
-    }
-
-    // set entity id generator
-    public void setEntityIdGenerator(IdGenerator entityIdGenerator) {
-        this.entityIdGenerator = entityIdGenerator;
     }
 
     // get uuid generator

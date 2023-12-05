@@ -1,13 +1,13 @@
-package com.kamijoucen.batchtask.behavior.service;
+package com.kamijoucen.batchtask.behavior.service.impl;
 
 import java.util.concurrent.TimeUnit;
 
+import com.kamijoucen.batchtask.behavior.service.TimerExecutor;
+import com.kamijoucen.batchtask.config.BaseBehavior;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.powerstruct.exe.Exe;
 
-public abstract class AbstractTimerExecutor implements TimerExecutor {
-
-    protected final BatchTaskConfiguration configuration;
+public abstract class AbstractTimerExecutor extends BaseBehavior implements TimerExecutor {
 
     protected final Exe<Void> runnable;
 
@@ -19,7 +19,7 @@ public abstract class AbstractTimerExecutor implements TimerExecutor {
 
     public AbstractTimerExecutor(BatchTaskConfiguration configuration, long initialDelay, long period,
             TimeUnit timeUnit, Exe<Void> runnable) {
-        this.configuration = configuration;
+        super(configuration);
         this.initialDelay = initialDelay;
         this.period = period;
         this.timeUnit = timeUnit;

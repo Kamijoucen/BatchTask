@@ -1,6 +1,5 @@
-package com.kamijoucen.batchtask.context;
+package com.kamijoucen.batchtask.config;
 
-import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.powerstruct.context.RuntimeContext;
 import com.kamijoucen.powerstruct.exe.Exe;
 import com.kamijoucen.powerstruct.interceptor.AbstractExeInterceptor;
