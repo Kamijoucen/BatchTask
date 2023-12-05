@@ -3,7 +3,7 @@ package com.kamijoucen.batchtask.executor;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
 import com.kamijoucen.powerstruct.context.RuntimeContext;
 
 public abstract class AbstractSessionSqlExe<T> extends AbstractSessionManagerExe<T> {

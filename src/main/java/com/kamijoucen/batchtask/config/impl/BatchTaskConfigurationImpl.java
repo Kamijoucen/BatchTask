@@ -6,11 +6,11 @@ import javax.sql.DataSource;
 
 import com.kamijoucen.batchtask.api.TaskManager;
 import com.kamijoucen.batchtask.api.impl.TaskManagerImpl;
-import com.kamijoucen.batchtask.behavior.IdGenerator;
-import com.kamijoucen.batchtask.behavior.impl.DBIncrementIdGeneratorImpl;
-import com.kamijoucen.batchtask.behavior.impl.UUIdGeneratorImpl;
-import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
-import com.kamijoucen.batchtask.behavior.mybatis.impl.MybatisSesstionManagerImpl;
+import com.kamijoucen.batchtask.behavior.service.IdGenerator;
+import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.impl.DBIncrementIdGeneratorImpl;
+import com.kamijoucen.batchtask.behavior.service.impl.MybatisSesstionManagerImpl;
+import com.kamijoucen.batchtask.behavior.service.impl.UUIdGeneratorImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.batchtask.config.BatchTaskRuntimeContextFactory;
 import com.kamijoucen.batchtask.context.ContextInterceptor;

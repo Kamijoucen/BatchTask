@@ -1,4 +1,4 @@
-package com.kamijoucen.batchtask.behavior.mybatis.impl;
+package com.kamijoucen.batchtask.behavior.service.impl;
 
 import java.util.Objects;
 
@@ -12,8 +12,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
-import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
-import com.kamijoucen.batchtask.behavior.mybatis.mapper.TaskMapper;
+import com.kamijoucen.batchtask.behavior.repository.mapper.BatchMapper;
+import com.kamijoucen.batchtask.behavior.repository.mapper.TaskMapper;
+import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
 
 public class MybatisSesstionManagerImpl implements MybatisSesstionManager {
 
@@ -22,14 +23,10 @@ public class MybatisSesstionManagerImpl implements MybatisSesstionManager {
     private SqlSessionFactory sqlSessionFactory;
     
     public MybatisSesstionManagerImpl(DataSource dataSource) {
-
+        Objects.requireNonNull(dataSource, "dataSource is null");
         this.dataSource = dataSource;
     }
-
-    private void initMapper(Configuration configuration) {
-        configuration.addMapper(TaskMapper.class);
-    }
-
+    
     @Override
     public synchronized void init() {
         if (sqlSessionFactory != null) {
@@ -39,8 +36,8 @@ public class MybatisSesstionManagerImpl implements MybatisSesstionManager {
         
         Configuration configuration = new Configuration(environment);
         configuration.setMapUnderscoreToCamelCase(true);
-        
-        initMapper(configuration);
+        configuration.addMapper(TaskMapper.class);
+        configuration.addMapper(BatchMapper.class);
 
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
     }

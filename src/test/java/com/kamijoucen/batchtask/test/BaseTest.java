@@ -13,9 +13,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
-import com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity;
-import com.kamijoucen.batchtask.behavior.mybatis.mapper.TaskMapper;
+import com.kamijoucen.batchtask.behavior.repository.entity.TaskEntity;
+import com.kamijoucen.batchtask.behavior.repository.mapper.TaskMapper;
+import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
 import com.kamijoucen.batchtask.config.impl.BatchTaskConfigurationImpl;
 import com.kamijoucen.batchtask.executor.BatchSaveTaskExe;
 import com.zaxxer.hikari.HikariConfig;

@@ -1,11 +1,11 @@
-package com.kamijoucen.batchtask.behavior.mybatis.mapper;
+package com.kamijoucen.batchtask.behavior.repository.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.kamijoucen.batchtask.behavior.mybatis.entity.TaskEntity;
+import com.kamijoucen.batchtask.behavior.repository.entity.TaskEntity;
 
 @Mapper
 public interface TaskMapper {

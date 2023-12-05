@@ -1,4 +1,4 @@
-package com.kamijoucen.batchtask.behavior.mybatis;
+package com.kamijoucen.batchtask.behavior.service;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;

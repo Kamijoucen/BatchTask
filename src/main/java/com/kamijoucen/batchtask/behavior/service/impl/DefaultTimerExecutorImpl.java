@@ -1,10 +1,10 @@
-package com.kamijoucen.batchtask.behavior.impl;
+package com.kamijoucen.batchtask.behavior.service.impl;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-import com.kamijoucen.batchtask.behavior.AbstractTimerExecutor;
+import com.kamijoucen.batchtask.behavior.service.AbstractTimerExecutor;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.powerstruct.exe.Exe;
 

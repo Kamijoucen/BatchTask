@@ -1,4 +1,4 @@
-package com.kamijoucen.batchtask.behavior.mybatis.entity;
+package com.kamijoucen.batchtask.behavior.repository.entity;
 
 import java.time.LocalDateTime;
 

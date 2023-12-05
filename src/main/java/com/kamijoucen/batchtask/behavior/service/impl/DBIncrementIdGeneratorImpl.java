@@ -1,6 +1,6 @@
-package com.kamijoucen.batchtask.behavior.impl;
+package com.kamijoucen.batchtask.behavior.service.impl;
 
-import com.kamijoucen.batchtask.behavior.IdGenerator;
+import com.kamijoucen.batchtask.behavior.service.IdGenerator;
 import com.kamijoucen.batchtask.config.BaseBehavior;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 

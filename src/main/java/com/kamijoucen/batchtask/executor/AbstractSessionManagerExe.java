@@ -1,6 +1,6 @@
 package com.kamijoucen.batchtask.executor;
 
-import com.kamijoucen.batchtask.behavior.mybatis.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.batchtask.domain.ContextPropertyEnum;
 import com.kamijoucen.powerstruct.context.RuntimeContext;
