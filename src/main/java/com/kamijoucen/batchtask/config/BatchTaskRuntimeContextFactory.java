@@ -20,7 +20,7 @@ public class BatchTaskRuntimeContextFactory extends RuntimeContextFactory {
         RuntimeContext context = super.create();
         context.addProperty(ContextPropertyEnum.BATCH_TASK_CONFIGURATION, batchTaskConfiguration);
         context.addProperty(ContextPropertyEnum.SQL_SESSION_MANAGER,
-                batchTaskConfiguration.getMybatisSesstionManager());
+                batchTaskConfiguration.getMybatisSessionManager());
         return context;
     }
 

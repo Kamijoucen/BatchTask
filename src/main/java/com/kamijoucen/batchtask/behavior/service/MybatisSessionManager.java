@@ -4,7 +4,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-public interface MybatisSesstionManager {
+public interface MybatisSessionManager {
 
     SqlSession openSession();
 

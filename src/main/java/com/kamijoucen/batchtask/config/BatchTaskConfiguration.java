@@ -3,7 +3,7 @@ package com.kamijoucen.batchtask.config;
 import javax.sql.DataSource;
 
 import com.kamijoucen.batchtask.api.TaskManager;
-import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSessionManager;
 import com.kamijoucen.powerstruct.api.ExecutionService;
 
 public interface BatchTaskConfiguration {
@@ -14,7 +14,7 @@ public interface BatchTaskConfiguration {
 
     ExecutionService getExecutionService();
 
-    MybatisSesstionManager getMybatisSesstionManager();
+    MybatisSessionManager getMybatisSessionManager();
     
     TaskManager getTaskManager();
     

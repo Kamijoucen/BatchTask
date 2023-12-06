@@ -3,13 +3,13 @@ package com.kamijoucen.batchtask.executor;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 
-import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSessionManager;
 import com.kamijoucen.powerstruct.context.RuntimeContext;
 
 public abstract class AbstractSessionSqlExe<T> extends AbstractSessionManagerExe<T> {
 
     @Override
-    public T execute(RuntimeContext ctx, MybatisSesstionManager manager) {
+    public T execute(RuntimeContext ctx, MybatisSessionManager manager) {
         SqlSession session = manager.openSession(getExecutionType());
         try {
             T result = execute(ctx, session, manager);
@@ -27,6 +27,6 @@ public abstract class AbstractSessionSqlExe<T> extends AbstractSessionManagerExe
         return ExecutorType.SIMPLE;
     }
     
-    abstract public T execute(RuntimeContext ctx, SqlSession session, MybatisSesstionManager manager);
+    abstract public T execute(RuntimeContext ctx, SqlSession session, MybatisSessionManager manager);
     
 }

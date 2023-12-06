@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import com.kamijoucen.batchtask.behavior.repository.entity.TaskEntity;
 import com.kamijoucen.batchtask.behavior.repository.mapper.TaskMapper;
-import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSessionManager;
 import com.kamijoucen.batchtask.config.impl.BatchTaskConfigurationImpl;
 import com.kamijoucen.batchtask.executor.BatchSaveTaskExe;
 import com.zaxxer.hikari.HikariConfig;
@@ -69,9 +69,9 @@ public class BaseTest {
 
     @Test
     public void testInsert() {
-        MybatisSesstionManager mybatisSesstionManager = configuration.getMybatisSesstionManager();
+        MybatisSessionManager mybatisSessionManager = configuration.getMybatisSessionManager();
 
-        try (SqlSession session = mybatisSesstionManager.openSession()) {
+        try (SqlSession session = mybatisSessionManager.openSession()) {
             TaskMapper mapper = session.getMapper(TaskMapper.class);
 
             TaskEntity task = new TaskEntity();
@@ -90,9 +90,9 @@ public class BaseTest {
     // test query
     @Test
     public void testQuery() {
-        MybatisSesstionManager mybatisSesstionManager = configuration.getMybatisSesstionManager();
+        MybatisSessionManager mybatisSessionManager = configuration.getMybatisSessionManager();
 
-        try (SqlSession session = mybatisSesstionManager.openSession()) {
+        try (SqlSession session = mybatisSessionManager.openSession()) {
             TaskMapper mapper = session.getMapper(TaskMapper.class);
 
             TaskEntity task = new TaskEntity();

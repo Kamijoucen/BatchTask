@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.kamijoucen.batchtask.behavior.repository.entity.TaskEntity;
 import com.kamijoucen.batchtask.behavior.repository.mapper.TaskMapper;
-import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSessionManager;
 import com.kamijoucen.powerstruct.context.RuntimeContext;
 
 public class BatchSaveTaskExe extends AbstractSessionSqlExe<List<TaskEntity>> {
@@ -25,7 +25,7 @@ public class BatchSaveTaskExe extends AbstractSessionSqlExe<List<TaskEntity>> {
     }
 
     @Override
-    public List<TaskEntity> execute(RuntimeContext ctx, SqlSession session, MybatisSesstionManager manager) {
+    public List<TaskEntity> execute(RuntimeContext ctx, SqlSession session, MybatisSessionManager manager) {
         if (CollectionUtils.isEmpty(taskList)) {
             return Collections.emptyList();
         }

@@ -14,17 +14,17 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import com.kamijoucen.batchtask.behavior.repository.mapper.BatchMapper;
 import com.kamijoucen.batchtask.behavior.repository.mapper.TaskMapper;
-import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSessionManager;
 import com.kamijoucen.batchtask.config.BaseBehavior;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 
-public class MybatisSesstionManagerImpl extends BaseBehavior implements MybatisSesstionManager {
+public class MybatisSessionManagerImpl extends BaseBehavior implements MybatisSessionManager {
 
     private final DataSource dataSource;
 
     private SqlSessionFactory sqlSessionFactory;
     
-    public MybatisSesstionManagerImpl(DataSource dataSource, BatchTaskConfiguration configuration) {
+    public MybatisSessionManagerImpl(DataSource dataSource, BatchTaskConfiguration configuration) {
         super(configuration);
         Objects.requireNonNull(dataSource, "dataSource is null");
         this.dataSource = dataSource;

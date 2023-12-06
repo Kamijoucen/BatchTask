@@ -6,12 +6,12 @@ import javax.sql.DataSource;
 
 import com.kamijoucen.batchtask.api.TaskManager;
 import com.kamijoucen.batchtask.api.impl.TaskManagerImpl;
-import com.kamijoucen.batchtask.behavior.factory.MybatisSesstionManagerFactory;
+import com.kamijoucen.batchtask.behavior.factory.MybatisSessionManagerFactory;
 import com.kamijoucen.batchtask.behavior.factory.TimerFactory;
-import com.kamijoucen.batchtask.behavior.factory.impl.MybatisSesstionManagerFactoryImpl;
+import com.kamijoucen.batchtask.behavior.factory.impl.MybatisSessionManagerFactoryImpl;
 import com.kamijoucen.batchtask.behavior.factory.impl.TimerFactoryImpl;
 import com.kamijoucen.batchtask.behavior.service.IdGenerator;
-import com.kamijoucen.batchtask.behavior.service.MybatisSesstionManager;
+import com.kamijoucen.batchtask.behavior.service.MybatisSessionManager;
 import com.kamijoucen.batchtask.behavior.service.impl.UUIdGeneratorImpl;
 import com.kamijoucen.batchtask.config.BatchTaskConfiguration;
 import com.kamijoucen.batchtask.config.BatchTaskRuntimeContextFactory;
@@ -35,10 +35,10 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
 
     private TaskManager taskManager;
 
-    private MybatisSesstionManager mybatisSesstionManager;
+    private MybatisSessionManager mybatisSessionManager;
 
     // factory
-    private MybatisSesstionManagerFactory mybatisSesstionManagerFactory;
+    private MybatisSessionManagerFactory mybatisSessionManagerFactory;
 
     private TimerFactory timerFactory;
 
@@ -52,7 +52,7 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     }
 
     private void initFactory() {
-        this.mybatisSesstionManagerFactory = new MybatisSesstionManagerFactoryImpl();
+        this.mybatisSessionManagerFactory = new MybatisSessionManagerFactoryImpl();
         this.timerFactory = new TimerFactoryImpl();
     }
 
@@ -71,8 +71,8 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
         this.taskManager = new TaskManagerImpl(this);
 
         // init mybatis
-        if (this.mybatisSesstionManager != null) {
-            this.mybatisSesstionManager = mybatisSesstionManagerFactory.createMybatisSesstionManager(dataSource, this);
+        if (this.mybatisSessionManager != null) {
+            this.mybatisSessionManager = mybatisSessionManagerFactory.createMybatisSessionManager(dataSource, this);
         }
     }
 
@@ -116,12 +116,12 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     }
 
     @Override
-    public MybatisSesstionManager getMybatisSesstionManager() {
-        return this.mybatisSesstionManager;
+    public MybatisSessionManager getMybatisSessionManager() {
+        return this.mybatisSessionManager;
     }
 
-    public void setMybatisSesstionManager(MybatisSesstionManager mybatisSesstionManager) {
-        this.mybatisSesstionManager = mybatisSesstionManager;
+    public void setMybatisSessionManager(MybatisSessionManager mybatisSessionManager) {
+        this.mybatisSessionManager = mybatisSessionManager;
     }
 
 }
