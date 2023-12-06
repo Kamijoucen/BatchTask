@@ -58,10 +58,8 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
 
     private void initStructConfiguration() {
         StructConfigurationImpl structConfigurationImpl = new StructConfigurationImpl();
-        structConfigurationImpl = new StructConfigurationImpl();
         structConfigurationImpl.getExecutor().addExeInterceptor(new ContextInterceptor(this));
-        structConfigurationImpl
-                .setRuntimeContextFactory(new BatchTaskRuntimeContextFactory(this, structConfigurationImpl));
+        structConfigurationImpl.setRuntimeContextFactory(new BatchTaskRuntimeContextFactory(this, structConfigurationImpl));
         this.structConfiguration = structConfigurationImpl;
         this.executionService = new ExecutionServiceImpl(this.structConfiguration);
     }
@@ -69,7 +67,6 @@ public class BatchTaskConfigurationImpl implements BatchTaskConfiguration {
     private void initBehavior() {
         this.uuIdGenerator = new UUIdGeneratorImpl(this);
         this.taskManager = new TaskManagerImpl(this);
-
         // init mybatis
         if (this.mybatisSessionManager != null) {
             this.mybatisSessionManager = mybatisSessionManagerFactory.createMybatisSessionManager(dataSource, this);
